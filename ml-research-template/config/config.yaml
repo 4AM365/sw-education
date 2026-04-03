@@ -1,0 +1,106 @@
+# Project Configuration
+# Load this in notebooks with: config = yaml.safe_load(open('config/config.yaml'))
+
+project:
+  name: "ML Research Project"
+  description: "Template for reproducible research"
+  version: "1.0"
+  author: "Your Name"
+  date_created: "2026-04-03"
+
+data:
+  raw_path: "./data/raw"
+  processed_path: "./data/processed"
+  external_path: "./data/external"
+  
+  # Data characteristics
+  test_size: 0.2
+  validation_size: 0.1
+  random_state: 42
+  
+  # Preprocessing
+  handle_missing: "drop"  # Options: drop, mean, median, forward_fill
+  handle_outliers: true
+  outlier_method: "iqr"  # Options: iqr, zscore
+  scale_features: true
+  scaler_type: "standard"  # Options: standard, minmax, robust
+
+model:
+  type: "xgboost"  # Options: xgboost, lightgbm, sklearn, neural_network
+  name: "baseline_v1"
+  save_path: "./results/models/"
+  
+  hyperparameters:
+    n_estimators: 200
+    max_depth: 7
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 1
+    reg_alpha: 0.0
+    reg_lambda: 1.0
+
+training:
+  seed: 42
+  batch_size: 32
+  num_epochs: 100
+  learning_rate: 0.05
+  optimizer: "adam"
+  loss: "cross_entropy"
+  early_stopping: true
+  patience: 10
+  validation_frequency: 5
+
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "auc"
+    - "confusion_matrix"
+  
+  cross_validation: true
+  cv_folds: 5
+  stratified: true
+
+output:
+  results_path: "./results"
+  figures_path: "./results/figures"
+  reports_path: "./results/reports"
+  models_path: "./results/models"
+  logs_path: "./logs"
+  
+  # Output settings
+  dpi: 300
+  figure_format: "png"
+  save_models: true
+  save_predictions: true
+
+experiment_tracking:
+  enabled: true
+  
+  # MLflow configuration
+  mlflow:
+    enabled: false
+    tracking_uri: "http://localhost:5000"
+    experiment_name: "ml-research"
+  
+  # Weights & Biases configuration
+  wandb:
+    enabled: false
+    project: "ml-research"
+    entity: "your_username"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/research.log"
+  console: true
+
+compute:
+  device: "cpu"  # Options: cpu, cuda, mps
+  gpu_id: 0
+  num_workers: 4
+  max_memory_mb: 8000
+  deterministic: true
